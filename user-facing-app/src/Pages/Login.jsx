@@ -1,9 +1,48 @@
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../config/firebaseConfig";
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(false);
+
+  const [isLoad, setLoading] = useState(false);
+
+  const [error, setError] = useState("");
+
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const navigate = useNavigate();
+
+  const provider = new GoogleAuthProvider();
+
+  const gmailLogin = () => {
+    signInWithPopup(auth, provider)
+      .then(() => {
+        return navigate("/home");
+      })
+      .catch((err) => {
+        setError(err.code);
+      });
+  };
+
+  const login = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      await signInWithEmailAndPassword(auth, email, password);
+      setLoading(false);
+      return navigate("/home");
+    } catch (error) {
+      setLoading(false);
+
+      setError(error.code);
+    }
+  };
   return (
     <div className="container">
       <div className="row text-center vh-100 mx-auto align-items-center">
@@ -15,6 +54,8 @@ const Login = () => {
               type="email"
               className="form-control py-3"
               placeholder="email..."
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3 position-relative">
@@ -22,6 +63,8 @@ const Login = () => {
               type={(hidePassword && "text") || "password"}
               className="form-control py-3"
               placeholder="Password..."
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             {hidePassword ? (
               <i
@@ -37,22 +80,39 @@ const Login = () => {
               ></i>
             )}
           </div>
-          <div className="mb-3">
-            <input
-              type="submit"
-              className="btn w-100 py-3 btn-primary"
-              role="button"
-            />
-          </div>
+          {isLoad ? (
+            <button
+              class="btn btn-primary py-3 w-100 mb-3"
+              type="button"
+              disabled
+            >
+              <span
+                class="spinner-grow spinner-grow-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Loading...
+            </button>
+          ) : (
+            <div className="mb-3">
+              <input
+                type="submit"
+                className="btn w-100 py-3 btn-primary"
+                role="button"
+                onClick={login}
+              />
+            </div>
+          )}
+
           <div className="justify-content-between d-flex">
             <p
               className="text-mute"
               role="button"
               onClick={() => navigate("/signup")}
             >
-              Don't have an Account{" "}
-              <span className="fw-bold  text-danger">Register</span>
+              <span className="fw-bold  text-primary">Create Account</span>
             </p>
+
             <p role="button">Forgot Password?</p>
           </div>
           <h3 className="text-muted mt-3">Or </h3>
@@ -65,6 +125,7 @@ const Login = () => {
               width="50px"
               className="border border-1 shadow-sm rounded-2 p-1"
               role="button"
+              onClick={gmailLogin}
             />
             <img
               src="https://img.icons8.com/?size=512&id=114441&format=png"
@@ -84,6 +145,7 @@ const Login = () => {
               icon-link-hover
             />
           </div>
+          <p className="text-danger fw-bold pt-5">{error}</p>
         </form>
       </div>
     </div>
