@@ -21,11 +21,14 @@ const Login = () => {
   const provider = new GoogleAuthProvider();
 
   const gmailLogin = () => {
+    setLoading(true);
     signInWithPopup(auth, provider)
       .then(() => {
+        setLoading(false);
         return navigate("/home");
       })
       .catch((err) => {
+        setLoading(false);
         setError(err.code);
       });
   };
@@ -46,6 +49,9 @@ const Login = () => {
   return (
     <div className="container">
       <div className="row text-center vh-100 mx-auto align-items-center">
+        <a className="navbar-brand fs-4 text-start">
+          <span className="fw-bold text-primary ">Zero</span> Hunger
+        </a>
         <form className="col-12 col-sm-6 mx-auto shadow-lg  p-5">
           <h2 className="mb-5">Log in</h2>
 
@@ -68,13 +74,13 @@ const Login = () => {
             />
             {hidePassword ? (
               <i
-                class="fa-regular fa-eye position-absolute top-50 end-0 translate-middle-y pe-3"
+                className="fa-regular fa-eye position-absolute top-50 end-0 translate-middle-y pe-3"
                 role="button"
                 onClick={() => setHidePassword(!hidePassword)}
               ></i>
             ) : (
               <i
-                class="fa-regular fa-eye-slash position-absolute top-50 end-0 translate-middle-y pe-3"
+                className="fa-regular fa-eye-slash position-absolute top-50 end-0 translate-middle-y pe-3"
                 role="button"
                 onClick={() => setHidePassword(!hidePassword)}
               ></i>
@@ -82,12 +88,12 @@ const Login = () => {
           </div>
           {isLoad ? (
             <button
-              class="btn btn-primary py-3 w-100 mb-3"
+              className="btn btn-primary py-3 w-100 mb-3"
               type="button"
               disabled
             >
               <span
-                class="spinner-grow spinner-grow-sm"
+                className="spinner-grow spinner-grow-sm"
                 role="status"
                 aria-hidden="true"
               ></span>

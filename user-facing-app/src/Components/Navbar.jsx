@@ -1,7 +1,7 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { auth } from "../config/firebaseConfig";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [name, setName] = useState(null);
@@ -23,11 +23,11 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary position-absolute w-100 start-0 px-0 px-sm-5 ">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary  w-100 start-0 px-0 px-sm-5 ">
       <div className="container-fluid px-sm-5 mx-sm-5">
-        <a className="navbar-brand fs-4">
+        <Link to="/home" className="navbar-brand fs-4">
           <span className="fw-bold text-primary">Zero</span> Hunger
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -42,27 +42,34 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mx-auto text-center gap-4">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <Link
+                to="/home"
+                className="nav-link active"
+                aria-current="page"
+                href="#"
+              >
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                About
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link to="/request" className="nav-link" href="#">
                 Request
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link">Send</a>
+              <Link to="/send" className="nav-link">
+                Donate
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/about" className="nav-link" href="#">
+                About
+              </Link>
             </li>
           </ul>
 
           <div className="gap-3 d-flex justify-content-between">
-            <div>
+            <div role="button">
               <li className="nav-item dropdown navbar-nav ms-auto">
                 <img
                   src={profilePic}
@@ -72,30 +79,28 @@ const Navbar = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 />
-                <ul class="dropdown-menu">
+                <ul className="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <Link to="/profile" className="dropdown-item" href="#">
                       Profile
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <Link to="/activites" className="dropdown-item" href="#">
                       Activities
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <hr class="dropdown-divider" />
+                    <hr className="dropdown-divider" />
                   </li>
-                  <li onClick={() => signOut(auth)}>
-                    <a class="dropdown-item" href="#">
-                      Log out
-                    </a>
+                  <li role="button" onClick={() => signOut(auth)}>
+                    <a className="dropdown-item">Log out</a>
                   </li>
                 </ul>
               </li>
             </div>
 
-            <i class="fa-regular fa-bell fs-4 my-auto "></i>
+            <i className="fa-regular fa-bell fs-4 my-auto " role="button"></i>
           </div>
         </div>
       </div>
