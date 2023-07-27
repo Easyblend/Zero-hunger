@@ -11,6 +11,7 @@ import Navbar from "./Components/Navbar";
 import useUserHook from "./Utils/useUserHook";
 import { useEffect } from "react";
 import ItemDetail from "./Pages/ItemDetail";
+import Profile from "./Pages/Profile";
 
 function App() {
   const route = useLocation();
@@ -18,7 +19,11 @@ function App() {
   const { user } = useUserHook();
 
   useEffect(() => {
-    if (user) return navigate("/home");
+    if (user) {
+      return navigate("/home");
+    } else {
+      return navigate("/");
+    }
   }, []);
 
   return (
@@ -33,6 +38,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/request" element={<RequestPage />} />
         <Route path="/send" element={<Send />} />
+        <Route path="/profile" element={<Profile user={user} />} />
         <Route path="/detail/:item" element={<ItemDetail />} />
       </Routes>
     </>

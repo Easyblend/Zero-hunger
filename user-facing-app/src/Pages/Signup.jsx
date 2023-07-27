@@ -19,7 +19,8 @@ const Signup = () => {
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
 
-  const gmailLogin = () => {
+  const gmailLogin = (e) => {
+    e.preventDefault();
     setLoading(true);
     signInWithPopup(auth, provider)
       .then(() => {
@@ -138,34 +139,19 @@ const Signup = () => {
           </div>
           <h3 className="text-muted mt-3">Or </h3>
           <p className="mt-3">Sign Up with </p>
-          <div className="gap-3 d-flex justify-content-center fs-3">
+          <button
+            className="gap-1 d-flex btn btn-dark justify-content-center fs-5 border border-1 w-50 py-2 shadow-sm rounded-2  mx-auto align-items-center"
+            onClick={gmailLogin}
+            role="button"
+          >
             <img
               src="https://img.icons8.com/?size=512&id=17949&format=png"
               alt="google"
-              height="50px"
-              width="50px"
-              className="border border-1 shadow-sm rounded-2 p-1"
-              role="button"
-              onClick={gmailLogin}
+              height="30px"
+              width="30px"
             />
-            <img
-              src="https://img.icons8.com/?size=512&id=114441&format=png"
-              height="50px"
-              width="50px"
-              alt="facebook"
-              className="border border-1 shadow-sm rounded-2 p-1"
-              role="button"
-            />
-            <img
-              src="https://img.icons8.com/?size=512&id=30840&format=png"
-              height="50px"
-              width="50px"
-              alt="apple"
-              className="border border-1 shadow-sm rounded-2 p-1"
-              role="button"
-              icon-link-hover
-            />
-          </div>
+            <p className="my-auto">Google</p>
+          </button>
           <p className="text-danger fw-bold pt-5">{error}</p>
         </form>
       </div>

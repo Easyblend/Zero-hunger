@@ -8,8 +8,8 @@ const Home = () => {
 
   return (
     <div className="container">
-      <div className="row align-items-center  pt-5">
-        <div className="col-12 col-sm-6 pt-5">
+      <div className="row align-items-center  pt-5 justify-content-center">
+        <div className="col-12 col-md-6 pt-5">
           <p className="p-0 m-0 g-0 text-muted">Eliminating Hunger</p>
           <p className="display-3 pb-4" style={{ fontWeight: "400" }}>
             Wait! Dont dump the item yet, We have a better{" "}

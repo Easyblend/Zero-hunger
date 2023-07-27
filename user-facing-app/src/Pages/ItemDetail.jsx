@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ItemDetail = () => {
   const detail = useParams();
@@ -46,6 +46,8 @@ const ItemDetail = () => {
     },
   ];
 
+  const navigate = useNavigate();
+
   const chooseItem = itemList.filter((item) => {
     return item.id == detail.item;
   });
@@ -75,10 +77,16 @@ const ItemDetail = () => {
           </div>
 
           <div className="d-flex gap-4">
-            <button className="btn btn-primary w-100 py-3 rounded-3">
+            <button
+              className="btn btn-primary w-100 py-3 rounded-3"
+              onClick={() => navigate("/home")}
+            >
               Request item
             </button>
-            <button className="btn btn-secondary  rounded-3 w-100 py-3 d-flex align-items-center justify-content-center gap-3">
+            <button
+              className="btn btn-secondary  rounded-3 w-100 py-3 d-flex align-items-center justify-content-center gap-3"
+              onClick={() => navigate("/home")}
+            >
               <span className="text-warning fs-4">&#9733;</span> save for later
             </button>
           </div>
