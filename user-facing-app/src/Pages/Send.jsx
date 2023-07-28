@@ -39,7 +39,7 @@ const Send = () => {
       value: "beverages",
       label: "Beverages",
       imgURL:
-        "https://images.pexels.com/photos/5532831/pexels-photo-5532831.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/8743948/pexels-photo-8743948.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
     {
       value: "clothing",
@@ -81,7 +81,7 @@ const Send = () => {
       value: "furniture",
       label: "Furniture",
       imgURL:
-        "https://images.pexels.com/photos/17584116/pexels-photo-17584116/free-photo-of-wooden-tables-and-chairs-in-a-modern-restaurant.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/11112735/pexels-photo-11112735.jpeg?auto=compress&cs=tinysrgb&w=600",
     },
     {
       value: "pet-supplies",
@@ -99,7 +99,7 @@ const Send = () => {
       value: "sports-equipment",
       label: "Sports Equipment",
       imgURL:
-        "https://practicalperfectionut.com/wp-content/uploads/2022/06/unnamed4-768x1024.jpeg",
+        "https://media.istockphoto.com/id/905105146/photo/sports-equipment-on-green-grass-top-view.jpg?b=1&s=612x612&w=0&k=20&c=4hsQEvaaq7bFE6MNQObA_3ueKN7wCU5XeyLXa_35pY8=",
     },
     {
       value: "medical-supplies",
@@ -125,9 +125,7 @@ const Send = () => {
     try {
       // Create a reference to the "Donations" document
       const donationsRef = doc(collection(db, "Donations"), item);
-
       // Create a reference to the "items" sub-collection under the "Donations" document
-
       // Add the data to the "items" sub-collection
       await addDoc(collection(donationsRef, "items"), {
         item,
