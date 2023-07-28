@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import BannerImage from "../assets/pexels-chan-walrus-958545.jpg";
 import ItemList from "../Components/ItemList";
 import { Link } from "react-router-dom";
+import {
+  collection,
+  doc,
+  getDocs,
+  limit,
+  collectionGroup,
+} from "firebase/firestore";
+import { db } from "../config/firebaseConfig";
 
 const RequestPage = () => {
   const itemList = [
@@ -73,6 +81,34 @@ const RequestPage = () => {
   ];
 
   const [filter, setFilter] = useState(false);
+  const [list, setItemList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const itemRef = collectionGroup(db, "items");
+        const querySnapshot = await getDocs(itemRef);
+
+        // Create an array to store the fetched items
+        const items = [];
+
+        // Loop through the sub-collection query snapshots and collect the data from sub-documents
+        querySnapshot.forEach((subDoc) => {
+          const subData = subDoc.data();
+          items.push(subData); // Add the sub-document data to the "items" array
+        });
+
+        // Update the component state with the fetched items
+        setItemList(items);
+      } catch (error) {
+        console.log("Error getting documents: ", error);
+      }
+    };
+
+    fetchData(); // Immediately invoke the fetchData function
+  }, []);
+
+  console.log(list);
 
   return (
     <div className="container">
@@ -143,10 +179,10 @@ const RequestPage = () => {
         </div>
       </div>
       <div className="row justify-content-start gap-auto">
-        {itemList.map((item, index) => {
+        {list.map((item, index) => {
           return (
             <Link to={`/detail/${item.id}`} className="col-sm-3 py-3">
-              <ItemList name={item.name} pic={item.pic} key={index} />
+              <ItemList name={item.item} pic={item.itemImage} key={index} />
             </Link>
           );
         })}

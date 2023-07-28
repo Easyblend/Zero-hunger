@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import DonateBanner from "../assets/woman.jpg";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import useUserHook from "../Utils/useUserHook";
 import { useNavigate } from "react-router-dom";
-
+import { v4 as uuidv4 } from "uuid";
 const Send = () => {
   const navigate = useNavigate();
 
@@ -123,7 +123,13 @@ const Send = () => {
     setLoading(true);
     setSuccess(false);
     try {
-      await addDoc(collection(db, "Donations", item, "items"), {
+      // Create a reference to the "Donations" document
+      const donationsRef = doc(collection(db, "Donations"), item);
+
+      // Create a reference to the "items" sub-collection under the "Donations" document
+
+      // Add the data to the "items" sub-collection
+      await addDoc(collection(donationsRef, "items"), {
         item,
         itemImage: image,
         location: location || "Kumasi, Knust campus",
@@ -131,7 +137,9 @@ const Send = () => {
         email: user.email,
         pick_up_date: date,
         date: serverTimestamp(),
+        id: uuidv4(),
       });
+
       setSuccess(true);
       setLoading(false);
     } catch (error) {
@@ -146,7 +154,7 @@ const Send = () => {
       <div className="row px-3 ">
         <div className=" col-12 col-sm-6 px-5 mt-4">
           <h6 className="text-start">Send an Item</h6>
-          <form className="col-10">
+          <form className="col-10" onSubmit={sendData}>
             <>
               <div className="my-4">
                 <label>Item type</label>
@@ -216,9 +224,9 @@ const Send = () => {
                 !success ? (
                   <button
                     className="btn btn-primary w-100 py-3 rounded-3"
-                    onClick={sendData}
+                    type="submit"
                   >
-                    Next
+                    Donate Item
                   </button>
                 ) : (
                   <div className="mx-auto text-center">
@@ -234,7 +242,7 @@ const Send = () => {
                       color="yello"
                     />
                     <div className="mt-3">
-                      <p>Our Team will contact you soon</p>
+                      <p>Our Team will contact you soon !!</p>
                       <button
                         className="btn btn-success text-light"
                         onClick={() => navigate("/home")}

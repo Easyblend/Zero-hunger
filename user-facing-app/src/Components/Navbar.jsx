@@ -73,8 +73,8 @@ const Navbar = () => {
               <li className="nav-item dropdown navbar-nav ms-auto">
                 <img
                   src={profilePic}
-                  width="30px"
-                  height="30px"
+                  width="40px"
+                  height="40px"
                   className="rounded-5 shadow-sm border dropdown-toggle"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -99,8 +99,6 @@ const Navbar = () => {
                 </ul>
               </li>
             </div>
-
-            <i className="fa-regular fa-bell fs-4 my-auto " role="button"></i>
           </div>
         </div>
       </div>
