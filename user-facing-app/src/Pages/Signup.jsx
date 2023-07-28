@@ -57,7 +57,7 @@ const Signup = () => {
   return (
     <div className="container">
       <div className="row text-center vh-100 mx-auto align-items-center">
-        <a className="navbar-brand fs-4 text-start">
+        <a href="/" className="navbar-brand fs-4 text-start">
           <span className="fw-bold text-primary">Zero</span> Hunger
         </a>
         <form className="col-12 col-sm-6 mx-auto shadow-lg  p-5">
@@ -104,11 +104,7 @@ const Signup = () => {
             )}
           </div>
           {isLoad ? (
-            <button
-              className="btn btn-primary py-3 w-100 mb-3"
-              type="button"
-              disabled
-            >
+            <button className="btn btn-primary py-3 w-100 mb-3" disabled>
               <span
                 className="spinner-grow spinner-grow-sm"
                 role="status"
@@ -121,7 +117,6 @@ const Signup = () => {
               <input
                 type="submit"
                 className="btn w-100 py-3 btn-primary"
-                role="button"
                 onClick={register}
               />
             </div>
@@ -142,7 +137,6 @@ const Signup = () => {
           <button
             className="gap-1 d-flex btn btn-dark justify-content-center fs-5 border border-1 w-50 py-2 shadow-sm rounded-2  mx-auto align-items-center"
             onClick={gmailLogin}
-            role="button"
           >
             <img
               src="https://img.icons8.com/?size=512&id=17949&format=png"

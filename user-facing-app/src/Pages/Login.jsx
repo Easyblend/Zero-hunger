@@ -1,5 +1,6 @@
 import {
   GoogleAuthProvider,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
@@ -47,10 +48,19 @@ const Login = () => {
       setError(error.code);
     }
   };
+
+  const forgetPass = async () => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      alert("Password reset link sent!");
+    } catch (error) {
+      setError(error.code);
+    }
+  };
   return (
     <div className="container">
       <div className="row text-center vh-100 mx-auto align-items-center">
-        <a className="navbar-brand fs-4 text-start">
+        <a href="/" className="navbar-brand fs-4 text-start">
           <span className="fw-bold text-primary ">Zero</span> Hunger
         </a>
         <form className="col-12 col-sm-6 mx-auto shadow-lg  p-5">
@@ -88,24 +98,19 @@ const Login = () => {
             )}
           </div>
           {isLoad ? (
-            <button
-              className="btn btn-primary py-3 w-100 mb-3"
-              type="button"
-              disabled
-            >
+            <button className="btn btn-primary py-3 w-100 mb-3" disabled>
               <span
                 className="spinner-grow spinner-grow-sm"
                 role="status"
                 aria-hidden="true"
-              ></span>
-              Loading...
+              ></span>{" "}
+              loading
             </button>
           ) : (
             <div className="mb-3">
               <input
                 type="submit"
                 className="btn w-100 py-3 btn-primary"
-                role="button"
                 onClick={login}
               />
             </div>
@@ -120,7 +125,9 @@ const Login = () => {
               <span className="fw-bold  text-primary">Create Account</span>
             </p>
 
-            <p role="button">Forgot Password?</p>
+            <p role="button" onClick={forgetPass}>
+              Forgot Password?
+            </p>
           </div>
           <h3 className="text-muted mt-3">Or </h3>
           <p className="mt-3">Login with </p>

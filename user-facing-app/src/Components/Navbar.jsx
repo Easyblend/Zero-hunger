@@ -61,11 +61,6 @@ const Navbar = () => {
                 Donate
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to="/about" className="nav-link" href="#">
-                About
-              </Link>
-            </li>
           </ul>
 
           <div className="gap-3 d-flex justify-content-between">
@@ -85,11 +80,7 @@ const Navbar = () => {
                       Profile
                     </Link>
                   </li>
-                  <li>
-                    <Link to="/activites" className="dropdown-item" href="#">
-                      Activities
-                    </Link>
-                  </li>
+
                   <li>
                     <hr className="dropdown-divider" />
                   </li>

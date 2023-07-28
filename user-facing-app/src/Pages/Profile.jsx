@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useUserHook from "../Utils/useUserHook";
+
 import { updateEmail, updatePassword, updateProfile } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
 

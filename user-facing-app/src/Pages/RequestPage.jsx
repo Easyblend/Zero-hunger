@@ -1,61 +1,12 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Components/Navbar";
+
 import BannerImage from "../assets/pexels-chan-walrus-958545.jpg";
 import ItemList from "../Components/ItemList";
 import { Link } from "react-router-dom";
-import {
-  collection,
-  doc,
-  getDocs,
-  limit,
-  collectionGroup,
-} from "firebase/firestore";
+import { getDocs, collectionGroup } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 
 const RequestPage = () => {
-  const itemList = [
-    {
-      name: "Yam chips",
-      pic: "https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg",
-      id: 7612,
-    },
-    {
-      id: 1,
-      name: "Canned Milk",
-      pic: "https://thumbs.dreamstime.com/b/valencia-spain-march-home-food-pantry-storage-provision-to-survive-coronavirus-covid-pandemic-cuarentine-canned-tuna-184921995.jpg",
-    },
-    {
-      id: 7613,
-      name: "Preserved Fruits",
-      pic: "https://images.squarespace-cdn.com/content/v1/54222358e4b0ef23d87a996b/1577802497997-D2EJBJRRCM7MD2IM1OPV/cr-nestle-golden-morn-cereal-250g.jpg",
-    },
-    {
-      name: "Cheese Balls",
-      pic: "https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg",
-      id: 76123,
-    },
-    {
-      name: "Yam chips",
-      pic: "https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg",
-      id: 761212,
-    },
-    {
-      name: "Yam chips",
-      pic: "https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg",
-      id: 7612233,
-    },
-    {
-      name: "Yam chips",
-      pic: "https://cdn.britannica.com/36/123536-050-95CB0C6E/Variety-fruits-vegetables.jpg",
-      id: 76122,
-    },
-    {
-      name: "Yam chips",
-      pic: "https://thumbs.dreamstime.com/z/valencia-spain-march-home-food-pantry-storage-provision-to-survive-coronavirus-covid-pandemic-cuarentine-canned-tuna-184921994.jpg",
-      id: 7,
-    },
-  ];
-
   const donationCategories = [
     {
       value: "",
@@ -81,7 +32,7 @@ const RequestPage = () => {
   ];
 
   const [filter, setFilter] = useState(false);
-  const [list, setItemList] = useState([]);
+  const [list, setItemList] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,12 +59,10 @@ const RequestPage = () => {
     fetchData(); // Immediately invoke the fetchData function
   }, []);
 
-  console.log(list);
-
   return (
-    <div className="container">
+    <div className="container ">
       {filter && (
-        <div className="position-absolute bg-light rounded-4 shadow-lg  px-5 pb-5 top-50 start-50 translate-middle">
+        <div className="position-absolute bg-light rounded-4 shadow-lg px-5 pb-5 top-50 start-50 translate-middle">
           <i
             role="button"
             class="fa-solid fa-xmark text-end w-100 p-3 fs-4 position-absolute end-0"
@@ -178,14 +127,30 @@ const RequestPage = () => {
           </h5>
         </div>
       </div>
-      <div className="row justify-content-start gap-auto">
-        {list.map((item, index) => {
-          return (
-            <Link to={`/detail/${item.id}`} className="col-sm-3 py-3">
-              <ItemList name={item.item} pic={item.itemImage} key={index} />
-            </Link>
-          );
-        })}
+
+      <div className="row justify-content-start gx-0 mx-0 px-0">
+        {list ? (
+          list.map((item, index) => {
+            return (
+              <Link
+                to={`/detail/${item.id}`}
+                className=" col-3 py-3 nav-link col-10 col-sm-5 col-md-2 mx-auto  mx-sm-0"
+              >
+                <ItemList name={item.item} pic={item.itemImage} key={index} />
+              </Link>
+            );
+          })
+        ) : (
+          <div className=" mx-auto text-center my-auto">
+            <div
+              class="spinner-border text-primary h4"
+              role="status"
+              style={{ height: "3rem", width: "3rem" }}
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Signup from "./Pages/Signup";
@@ -6,7 +5,7 @@ import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import RequestPage from "./Pages/RequestPage";
 import Send from "./Pages/Send";
-import About from "./Pages/About";
+
 import Navbar from "./Components/Navbar";
 import useUserHook from "./Utils/useUserHook";
 import { useEffect } from "react";
@@ -35,7 +34,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/about" element={<About />} />
+
         <Route path="/request" element={<RequestPage />} />
         <Route path="/send" element={<Send />} />
         <Route path="/profile" element={<Profile user={user} />} />
