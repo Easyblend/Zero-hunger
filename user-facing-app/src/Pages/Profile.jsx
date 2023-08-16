@@ -18,8 +18,8 @@ const Profile = ({ user }) => {
 
   const profileUpdate = async (e) => {
     e.preventDefault();
-    setLoad(true);
     try {
+      setLoad(true);
       if (newName || pic) {
         await updateProfile(auth.currentUser, {
           displayName: newName || user.displayName,

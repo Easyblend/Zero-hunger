@@ -66,7 +66,7 @@ const ItemDetail = () => {
       });
 
       await fetch(
-        `https://api.elasticemail.com/v2/email/send?apikey=C81D994DCDC4B9551415D1D7258D6A91F4FD2031A0A26963776212B6849377EFB89044BC96901D28C6D35C272275549A&msgTo=easyblend85@gmail.com&from=kenzieemma072@gmail.com&bodyHtml=<h1>Hello </h1><p>${user.displayName} has requested ${newList[0]?.item}</p>&subject=New item Request`
+        `https://api.elasticemail.com/v2/email/send?apikey=C81D994DCDC4B9551415D1D7258D6A91F4FD2031A0A26963776212B6849377EFB89044BC96901D28C6D35C272275549A&msgTo=kenzieema072@gmail.com&from=kenzieemma072@gmail.com&bodyHtml=<h1>${newList[0]?.item} Request</h1><p>${user.displayName} has requested ${newList[0]?.item}</p>&subject=New item Request`
       );
 
       setLoading(false);
