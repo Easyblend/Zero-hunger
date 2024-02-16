@@ -125,7 +125,7 @@ const Send = () => {
                   type="text"
                   className="form-control  border-2 rounded-3"
                   placeholder="where item would be picked up"
-                  value={location}
+                  value={location || ""}
                   required
                   onChange={(e) => setLocation(e.target.value)}
                 />
