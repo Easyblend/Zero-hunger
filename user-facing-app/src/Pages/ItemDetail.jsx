@@ -23,7 +23,40 @@ const ItemDetail = () => {
 
   const { user } = useUserHook();
 
+  const [latitude, setLatitude] = useState(2.03);
+  const [longitude, setLongitude] = useState(0.7367);
+  const [location, setLocation] = useState("unknown");
+
+  const key = "69b7ace1292f4680e6ec6440f4372d2e";
+
+  if (navigator.geolocation) {
+    // Get the user's current position
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      },
+      (error) => {
+        console.error("Error getting location:", error);
+      }
+    );
+
+    async function fetchLocation() {
+      const response = await fetch(
+        `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${key}`
+      );
+      const data = await response.json();
+
+      // Assuming the response structure is accurate, update location state
+      setLocation(data[0]?.name + ", " + data[0]?.state);
+    }
+
+    fetchLocation();
+  } else {
+    console.error("Geolocation is not supported by this browser.");
+  }
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         const itemRef = collectionGroup(db, "items");
@@ -46,12 +79,16 @@ const ItemDetail = () => {
 
         setNewList(chooseItem);
       } catch (error) {
-        console.log("Error getting documents: ", error);
+        alert("Error getting documents:");
       }
+
     };
 
     fetchData(); // Immediately invoke the fetchData function
   }, []);
+
+
+
 
   const sendRequest = async (e) => {
     e.preventDefault();
@@ -62,18 +99,19 @@ const ItemDetail = () => {
         email: user.email,
         item: newList[0].item,
         date: serverTimestamp(),
-        location: "Kumasi, Knust Campus",
+        location: location || null,
       });
 
       await fetch(
-        `https://api.elasticemail.com/v2/email/send?apikey=C81D994DCDC4B9551415D1D7258D6A91F4FD2031A0A26963776212B6849377EFB89044BC96901D28C6D35C272275549A&msgTo=kenzieema072@gmail.com&from=kenzieemma072@gmail.com&bodyHtml=<h1>${newList[0]?.item} Request</h1><p>${user.displayName} has requested ${newList[0]?.item}</p>&subject=New item Request`
+        `https://api.elasticemail.com/v2/email/send?apikey=C81D994DCDC4B9551415D1D7258D6A91F4FD2031A0A26963776212B6849377EFB89044BC96901D28C6D35C272275549A&msgTo=kenzieema072@gmail.com&from=kenzieemma072@gmail.com&bodyHtml=<h1>${newList[0]?.item} Request from <h5>${user.email}</h5></h1><p>${user.displayName} has requested ${newList[0]?.item} <hr>${location} </p>&subject=New item Request`
       );
+
 
       setLoading(false);
       setSuccess(true);
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      alert("Server Error: Please try again later");
     }
   };
 

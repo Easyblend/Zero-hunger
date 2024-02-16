@@ -9,6 +9,7 @@ const useUserHook = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
+
     return unsubscribe;
   }, []);
 

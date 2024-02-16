@@ -103,6 +103,8 @@ const Signup = () => {
               ></i>
             )}
           </div>
+          {error && <p className="text-danger fw-bold py-2">{error.split("/")[1]}</p>
+          }
           {isLoad ? (
             <button className="btn btn-primary py-3 w-100 mb-3" disabled>
               <span
@@ -146,7 +148,7 @@ const Signup = () => {
             />
             <p className="my-auto">Google</p>
           </button>
-          <p className="text-danger fw-bold pt-5">{error}</p>
+
         </form>
       </div>
     </div>

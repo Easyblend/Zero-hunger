@@ -22,36 +22,32 @@ const Send = () => {
 
   const key = "69b7ace1292f4680e6ec6440f4372d2e";
 
-  useEffect(() => {
-    // Check if the browser supports geolocation
-    if (navigator.geolocation) {
-      // Get the user's current position
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-        }
-      );
-
-      async function fetchLocation() {
-        const response = await fetch(
-          `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${key}`
-        );
-        const data = await response.json();
-
-        // Assuming the response structure is accurate, update location state
-        setLocation(data[0]?.name + ", " + data[0]?.state);
+  if (navigator.geolocation) {
+    // Get the user's current position
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      },
+      (error) => {
+        console.error("Error getting location:", error);
       }
+    );
 
-      fetchLocation();
-    } else {
-      console.error("Geolocation is not supported by this browser.");
+    async function fetchLocation() {
+      const response = await fetch(
+        `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${key}`
+      );
+      const data = await response.json();
+
+      // Assuming the response structure is accurate, update location state
+      setLocation(data[0]?.name + ", " + data[0]?.state);
     }
-  }, []);
 
+    fetchLocation();
+  } else {
+    console.error("Geolocation is not supported by this browser.");
+  }
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState(null);
 
@@ -77,14 +73,14 @@ const Send = () => {
       });
 
       await fetch(
-        `https://api.elasticemail.com/v2/email/send?apikey=C81D994DCDC4B9551415D1D7258D6A91F4FD2031A0A26963776212B6849377EFB89044BC96901D28C6D35C272275549A&msgTo=kenzieema072@gmail.com&from=kenzieemma072@gmail.com&bodyHtml=<h1>Incoming ${item} Donation</h1><p>${user.displayName} has Donanted ${item} <img src={${image}}/></p>&subject=New item Request`
+        `https://api.elasticemail.com/v2/email/send?apikey=C81D994DCDC4B9551415D1D7258D6A91F4FD2031A0A26963776212B6849377EFB89044BC96901D28C6D35C272275549A&msgTo=kenzieema072@gmail.com&from=kenzieemma072@gmail.com&bodyHtml=<h1>Incoming ${item} Donation</h1><p>${user.displayName} has Donanted ${item}, Request Location: ${location}</p>&subject=New item Requested`
       );
 
       setSuccess(true);
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      alert(error.split("/")[1] || "An error occured")
       setSuccess(false);
     }
   };

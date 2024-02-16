@@ -35,6 +35,7 @@ const RequestPage = () => {
   const [list, setItemList] = useState(null);
 
   useEffect(() => {
+
     const fetchData = async () => {
       try {
         const itemRef = collectionGroup(db, "items");
@@ -52,7 +53,7 @@ const RequestPage = () => {
         // Update the component state with the fetched items
         setItemList(items);
       } catch (error) {
-        console.log("Error getting documents: ", error);
+        alert("error please try again later")
       }
     };
 
@@ -92,8 +93,8 @@ const RequestPage = () => {
                 className="form-control  border-2 rounded-3"
                 placeholder="item name"
 
-                // value={email}
-                // onChange={(e) => setEmail(e.target.value)}
+              // value={email}
+              // onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </form>

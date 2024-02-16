@@ -36,6 +36,7 @@ const Login = () => {
   };
 
   const login = async (e) => {
+
     e.preventDefault();
     try {
       setLoading(true);
@@ -97,6 +98,7 @@ const Login = () => {
               ></i>
             )}
           </div>
+          {error && <p className="text-danger fw-bold py-2">{error.split("/")[1]}</p>}
           {isLoad ? (
             <button className="btn btn-primary py-3 w-100 mb-3" disabled>
               <span
@@ -143,7 +145,7 @@ const Login = () => {
             />
             <p className="my-auto">Google</p>
           </button>
-          <p className="text-danger fw-bold pt-5">{error}</p>
+
         </form>
       </div>
     </div>
