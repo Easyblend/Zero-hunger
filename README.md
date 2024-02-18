@@ -1,6 +1,7 @@
 # Getting Started with Create React App
 ![Image 1](user-facing-app/image.png)
 ![Image 1](user-facing-app/image-4.png)
+![Image 1](user-facing-app/image-2.png)
 ![Image 1](user-facing-app/image-1.png)
 ![Image 1](user-facing-app/image-3.png)
 
